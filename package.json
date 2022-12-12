@@ -1,0 +1,25 @@
+{
+  "name": "aukodas-lms_be",
+  "version": "1.0.0",
+  "description": "This would serve as a learning management system for the Golden Koder bootcamp",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node main",
+    "dev": "nodemon main",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "auleki",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20"
+  }
+}
