@@ -27,6 +27,17 @@ const menteeSchema = new Schema({
         type: String,
         required: true
     },
+    currentCohort: {
+        cohort: {
+            type: Schema.Types.ObjectId,
+            ref: "Cohort",
+        },
+        projects: {
+            type: [Schema.Types.ObjectId],
+            ref: "Project"
+        }
+    },
+
     // which would involve their average score for the current cohort
     records: Array
 }, { timestamps: true })

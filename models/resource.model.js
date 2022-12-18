@@ -1,23 +1,23 @@
 import { model, Schema } from 'mongoose'
 
-const taskSchema = new Schema({
+const resourceSchema = new Schema({
     title: {
         type: String,
         required: true
     },
-    content: {
+    description: {
         type: String,
         required: true
     },
-    deadline: {
-        type: Date,
+    url: {
+        type: String,
         required: true
     },
-    submissionUrl: {
-        type: String,
+    tags: {
+        type: [String],
         required: true
     }
 }, { timestamps: true })
 
-const Task = model('Task', taskSchema)
-export default Task
+const Resource = model('Resource', resourceSchema)
+export default Resource

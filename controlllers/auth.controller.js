@@ -1,4 +1,3 @@
-
 export const register = async (req, res) => {
     try {
         res.status(201).json({ message: "User is successfully created" })

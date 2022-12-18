@@ -5,9 +5,17 @@ const cohortSchema = new Schema({
         type: String,
         required: true
     },
-    tasks: {
+    startDate: {
+        type: Date,
+        required: true
+    },
+    endDate: {
+        type: Date,
+        required: true
+    },
+    projects: {
         type: [Schema.Types.ObjectId],
-        ref: "Task"
+        ref: "Project"
     },
     mentees: {
         type: [Schema.Types.ObjectId],
@@ -15,7 +23,7 @@ const cohortSchema = new Schema({
     },
     mentors: {
         type: [Schema.Types.ObjectId],
-        ref: "Mentors"
+        ref: "Mentor"
     }
 }, { timestamps: true })
 
