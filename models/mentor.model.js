@@ -2,9 +2,15 @@ import { model, Schema } from "mongoose";
 
 const mentor = new Schema({
     name: {
-        first: String,
-        last: String,
-        required: true
+        first: {
+            type: String,
+            required: true
+        },
+        last: {
+            type: String,
+            required: true
+        },
+        username: String
     },
     password: {
         type: String,
