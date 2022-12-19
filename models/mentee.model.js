@@ -1,13 +1,16 @@
 import { model, Schema } from 'mongoose'
 
 const menteeSchema = new Schema({
-    firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
-        type: String,
-        required: true
+    name: {
+        first: {
+            type: String,
+            required: true
+        },
+        last: {
+            type: String,
+            required: true
+        },
+        username: String
     },
     email: {
         type: String,
@@ -23,9 +26,8 @@ const menteeSchema = new Schema({
         type: String,
         trim: true
     },
-    role: {
-        type: String,
-        required: true
+    level: {
+        type: Number
     },
     currentCohort: {
         cohort: {
@@ -37,7 +39,6 @@ const menteeSchema = new Schema({
             ref: "Project"
         }
     },
-
     // which would involve their average score for the current cohort
     records: Array
 }, { timestamps: true })
