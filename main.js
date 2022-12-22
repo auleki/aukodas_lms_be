@@ -23,7 +23,6 @@ class Server {
 		app.use(express.json())
 	}
 
-
 	newRoute(path) {
 		return `${this.#versioning}/${path}`
 	}
@@ -34,6 +33,7 @@ class Server {
 
 	async connectToDb() {
 		const dbUrl = process.env.DATABASE_URL || ""
+		mongoose.set({ strictQuery: false })
 		try {
 			await mongoose.connect(dbUrl)
 			this.startServer()
