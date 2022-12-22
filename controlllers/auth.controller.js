@@ -1,17 +1,23 @@
 import Mentee from '../models/mentee.model.js'
 import Mentor from '../models/mentor.model.js'
 import { ACCOUNT_TYPE } from '../utilities/enum.js'
+import Helpers from '../helpers/helper.js'
+import { jwtToken, verifyToken } from '../helpers/jwt.js'
+
+const helpers = new Helpers()
 
 /**
  * register - we can register both a mentee and a mentor, 
  * the differenciating tag will be the role passed in via the client's request
  * @param req - the request body
  * @param res - the response body
- */
+*/
 export const register = async (req, res) => {
     try {
         const userCredentials = req.body
         let newUser;
+        const hashedPassword = await helpers.hashValue(userCredentials.password)
+        userCredentials.password = hashedPassword
         const { accountType, ...user } = userCredentials
         if (userCredentials?.accountType === ACCOUNT_TYPE.MENTOR) {
             newUser = new Mentor(user)
@@ -35,18 +41,40 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const userCredentials = req.body
-        let foundUser = {}
+        let foundUser;
         // check whether user is a mentor or mentee
         if (userCredentials.accountType === ACCOUNT_TYPE.MENTOR) {
             // verify information for as a mentor
-            foundUser = Mentor.findOne(userCredentials.email)
+            foundUser = await Mentor.findOne({ email: userCredentials.email })
         } else {
             // verify information for a mentee
-            foundUser = Mentee.findOne(userCredentials.email)
+            foundUser = await Mentee.findOne({ email: userCredentials.email })
         }
-        res.status(201).json({ message: "Logged in successfully" })
+        const isPasswordSame = await helpers.compareHashValue(userCredentials.password, foundUser.password)
+        console.log('is pass same?', isPasswordSame)
+        if (!isPasswordSame) {
+            res.status(401).json({ error: 'password is incorrect' })
+        } else {
+            const userInfo = {
+                email: foundUser.email,
+                name: {
+                    first: foundUser.name.first,
+                    last: foundUser.name.last
+                }
+            }
+            const token = jwtToken(userInfo)
+            res
+                .status(201)
+                .json({
+                    message: "Logged in successfully",
+                    data: {
+                        token
+                    }
+                })
+        }
+
     } catch (error) {
-        res.status(400).json({ message: "There is a problem here" })
+        res.status(400).json({ message: "There is a problem here", error: error })
     }
 }
 
