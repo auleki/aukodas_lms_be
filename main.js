@@ -6,6 +6,7 @@ import morgan from 'morgan'
 import mongoose from 'mongoose'
 import authRoutes from "./routes/auth.routes.js"
 import cohortRoutes from "./routes/cohort.routes.js"
+import mentorRoutes from "./routes/mentor.routes.js"
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -31,6 +32,7 @@ class Server {
 	addRoutes() {
 		app.use(this.newRoute("auth"), authRoutes)
 		app.use(this.newRoute("cohort"), cohortRoutes)
+		app.use(this.newRoute("mentor"), mentorRoutes)
 	}
 
 	async connectToDb() {
