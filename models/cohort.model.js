@@ -5,6 +5,10 @@ const cohortSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     startDate: {
         type: Date,
         required: true
